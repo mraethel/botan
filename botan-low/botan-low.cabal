@@ -117,6 +117,7 @@ library
     Botan.Low.Version
     Botan.Low.View
     Botan.Low.X509
+    Botan.Low.XOF
     Botan.Low.ZFEC
 
   other-modules:
