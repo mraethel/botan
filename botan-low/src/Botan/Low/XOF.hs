@@ -15,12 +15,6 @@ module Botan.Low.XOF (
     XOF(..)
   , XOFName
   , XOFDigest
-  , pattern AES_CRYSTALS
-  , pattern ASCON_XOF128
-  , pattern CSHAKE128   
-  , pattern CSHAKE256   
-  , pattern SHAKE128    
-  , pattern SHAKE256    
   , withXOF
   , xofInit
   , xofCopyState
@@ -31,6 +25,9 @@ module Botan.Low.XOF (
   , xofUpdate
   , xofOutput
   , xofDestroy
+  , pattern ASCON_XOF128
+  , pattern SHAKE128
+  , pattern SHAKE256
   ) where
 
 import           Botan.Bindings.XOF
@@ -106,26 +103,17 @@ xofOutput xof sz = withXOF xof $ \ xofPtr -> do
     allocBytes sz $ \ digestPtr -> do
         throwBotanIfNegative_ $ botan_xof_output xofPtr digestPtr $ fromIntegral sz
 
-pattern AES_CRYSTALS
-    ,   ASCON_XOF128
-    ,   CSHAKE128
-    ,   CSHAKE256
+pattern ASCON_XOF128
     ,   SHAKE128
     ,   SHAKE256
     :: XOFName
-pattern AES_CRYSTALS = BOTAN_XOF_AES_CRYSTALS
 pattern ASCON_XOF128 = BOTAN_XOF_ASCON_XOF128
-pattern CSHAKE128    = BOTAN_XOF_CSHAKE_256
-pattern CSHAKE256    = BOTAN_XOF_CSHAKE_256
-pattern SHAKE128     = BOTAN_XOF_SHAKE_256
-pattern SHAKE256     = BOTAN_XOF_SHAKE_256
+pattern SHAKE128     = BOTAN_XOF_SHAKE_256_XOF
+pattern SHAKE256     = BOTAN_XOF_SHAKE_256_XOF
 
 allXOFs :: [XOFName]
 allXOFs =
-    [ AES_CRYSTALS
-    , ASCON_XOF128
-    , CSHAKE128
-    , CSHAKE256
+    [ ASCON_XOF128
     , SHAKE128
     , SHAKE256
     ]
